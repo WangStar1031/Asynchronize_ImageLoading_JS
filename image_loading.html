@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Asynchronize Image Loading...</title>
+</head>
+<style type="text/css">
+	img {
+		width: 23vw;
+		height: 17vw;
+		background: url(loading.gif) 50% no-repeat;
+		border: 1px solid black;
+		border-radius: 5px;
+		/*background-size: cover;*/
+	}
+</style>
+<body>
+	<!-- <img> -->
+</body>
+<script type="text/javascript">
+	var img_urls = ["https://test.admeat.com/ords/admeattest/en/img/m/9185_M_$_20 (5).jpg","https://test.admeat.com/ords/admeattest/en/img/m/9182_M_$_20 (2).jpg", "https://test.admeat.com/ords/admeattest/en/img/m/9183_M_$_20 (3).jpg"];
+	for( var i = 0; i < img_urls.length; i++){
+		var img = document.createElement("img");
+		img.setAttribute("url", img_urls[i]);
+		document.getElementsByTagName("body")[0].appendChild(img);
+	}
+	var images = document.images;
+	var arrDownloadingImage = [];
+	for( var i = 0; i < img_urls.length; i++){
+		arrDownloadingImage.push( new Image());
+		arrDownloadingImage[i].onload = function(){
+			var url = decodeURIComponent(this.src);
+			for( var j = 0; j < images.length; j++){
+				var imgs = images[j];
+				if( imgs.getAttribute("url") == url){
+					imgs.src = url;
+					imgs.style.backgroundSize = "cover";
+				}
+			}
+		}
+		arrDownloadingImage[i].src = img_urls[i];
+	}
+
+</script>
+</html>
